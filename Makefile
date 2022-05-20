@@ -12,5 +12,5 @@ run: debug
 clean:
 	@rm -rf out
 
-update:
+sync:
 	@gclient sync

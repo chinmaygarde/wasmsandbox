@@ -2,4 +2,8 @@ executable("main") {
   sources = [
     "main.cc"
   ]
+
+  deps = [
+    "../impeller/base"
+  ]
 }
