@@ -1,0 +1,16 @@
+
+config("compiler") {
+  cflags = []
+  cflags_c = []
+  cflags_cc = []
+  ldflags = []
+
+  cflags_c += [ "-std=c99" ]
+
+  cflags_cc += [ "-std=c++17" ]
+
+  libs = [
+    "m",
+    "stdc++",
+  ]
+}
