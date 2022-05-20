@@ -1,4 +1,4 @@
-deps = [
+deps = {
   'third_party/gn': {
     'packages': [
       {
@@ -8,4 +8,4 @@ deps = [
     ],
     'dep_type': 'cipd',
   },
-]
+}

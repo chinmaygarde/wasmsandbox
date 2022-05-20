@@ -1,0 +1,5 @@
+third_party/gn
+.cipd/
+.gclient_entries
+out/
+*.sublime-workspace

@@ -1,49 +1,34 @@
 declare_args() {
-  # The path to functional Clang toolchain capable of building the target triple.
-  toolchain_path = ""
-
-  # The path to the target system sysroot.
-  sysroot_path = ""
+  wasi_sdk = "/Users/buzzy/Downloads/wasi-sdk"
 }
 
-toolchain("clang") {
-  assert(toolchain_path != "", "Toolchain must be specified")
-  assert(sysroot_path != "", "Sysroot must be specified")
+toolchain("toolchain") {
+  assert(wasi_sdk != "", "Wasi SDK path must be specified.")
+
+  toolchain_path = "$wasi_sdk"
+  sysroot_path = "$wasi_sdk/share/wasi-sysroot"
 
   # Setup path to the tools to invoke
   cc = "${toolchain_path}/bin/clang"
   cxx = "${toolchain_path}/bin/clang++"
   ld = "${toolchain_path}/bin/clang"
-  ar = "${toolchain_path}/bin/$target_triple-ar"
+  ar = "${toolchain_path}/bin/ar"
 
   # Setup the target triple, this needs is required for all tool invocations.
-  target_triple_command = "--target=wasm-unknown-wasi"
+  target_triple_command = "--target=wasm32-unknown-wasi"
   sysroot_command = "--sysroot $sysroot_path"
-
-  # Add extra headers search directories for folders relative to sysroot.
-  extra_system_include_dirs_string = "-isysroot $sysroot_path"
-  foreach(extra_system_include_dir, extra_system_include_dirs) {
-    extra_system_include_dirs_string = "$extra_system_include_dirs_string -iwithsysroot $extra_system_include_dir"
-  }
-
-  # Add extra library search paths for folders relative to sysroot.
-  extra_system_lib_dirs_string = ""
-  foreach(extra_system_lib_dir, extra_system_lib_dirs) {
-    extra_system_lib_dirs_string =
-        "$extra_system_lib_dirs_string -L$sysroot_path/$extra_system_lib_dir"
-  }
 
   # Common GN verbiage.
   lib_switch = "-l"
   lib_dir_switch = "-L"
 
   # Common description prefixes in non-verbose invocation.
-  pretty_build_prefix = "🔨 "
-  pretty_link_prefix = "⛓️ "
+  pretty_build_prefix = "🔨🔨"
+  pretty_link_prefix = "⛓️⛓️"
 
   tool("cc") {
     depfile = "{{output}}.deps"
-    command = "$cc -o {{output}} -MMD -MF $depfile -c $target_triple_command $sysroot_command $extra_system_include_dirs_string {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} {{source}}"
+    command = "$cc -o {{output}} -MMD -MF $depfile -c $target_triple_command $sysroot_command {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} {{source}}"
     outputs = [
       "{{target_out_dir}}/{{target_output_name}}/objects/{{source_name_part}}.o",
     ]
@@ -53,9 +38,9 @@ toolchain("clang") {
 
   tool("cxx") {
     depfile = "{{output}}.deps"
-    command = "$cxx -o {{output}} -MMD -MF $depfile -c $target_triple_command $sysroot_command $extra_system_include_dirs_string {{defines}} {{include_dirs}} {{cflags}} {{cflags_cc}} {{source}}"
+    command = "$cxx -o {{output}} -MMD -MF $depfile -c $target_triple_command $sysroot_command {{defines}} {{include_dirs}} {{cflags}} {{cflags_cc}} {{source}}"
     outputs = [
-      "{{target_out_dir}}/{{target_output_name}}/objects/{{source_name_part}}.o",
+      "{{target_out_dir}}/objects/{{source_name_part}}.o",
     ]
     depsformat = "gcc"
     description = "$pretty_build_prefix CXX: {{source_name_part}}"
@@ -77,7 +62,7 @@ toolchain("clang") {
     outfile = "{{target_out_dir}}/{{target_output_name}}{{output_extension}}"
     rspfile = "{{output}}.rsp"
     rspfile_content = "{{inputs}}"
-    command = "$ld -o $outfile $target_triple_command $sysroot_command $extra_system_lib_dirs_string -shared {{ldflags}} {{solibs}} {{libs}} @$rspfile"
+    command = "$ld -o $outfile $target_triple_command $sysroot_command -shared {{ldflags}} {{solibs}} {{libs}} @$rspfile"
     description = "$pretty_link_prefix Shared Library: {{output}}"
     outputs = [
       outfile,
@@ -87,10 +72,10 @@ toolchain("clang") {
   }
 
   tool("link") {
-    outfile = "{{target_out_dir}}/{{target_output_name}}/executables/{{target_output_name}}"
+    outfile = "{{target_out_dir}}/{{target_output_name}}"
     rspfile = "$outfile.rsp"
     rspfile_content = "{{inputs}}"
-    command = "$ld -o $outfile $target_triple_command $sysroot_command $extra_system_lib_dirs_string {{ldflags}} {{solibs}} {{libs}} @$rspfile"
+    command = "$ld -o $outfile $target_triple_command $sysroot_command {{ldflags}} {{solibs}} {{libs}} @$rspfile"
     outputs = [
       outfile,
     ]

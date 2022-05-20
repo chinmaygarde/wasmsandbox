@@ -1,0 +1,34 @@
+{
+  "build_systems": [
+    {
+      "name": "Wasm Sandbox Build All",
+      "shell_cmd": "ninja -C out/Debug && wasmer ./out/Debug/obj/main/main",
+      "working_dir": "${project_path}",
+      "file_regex": "(.*):([\\d]+):([\\d]+)?:? ?((?:error|warning|note): ?.*)",
+      "shell": true,
+    }
+  ],
+  "folders": [
+    {
+      "path": ".",
+    }
+  ],
+  "settings":
+  {
+    "LSP":
+    {
+      "clangd":
+      {
+        "enabled": true,
+        "command": [
+          "clangd",
+          "--compile-commands-dir=out/Debug",
+          "--clang-tidy",
+          "-header-insertion=never",
+          "-j=36",
+          "--background-index=true"
+        ],
+      },
+    },
+  },
+}
