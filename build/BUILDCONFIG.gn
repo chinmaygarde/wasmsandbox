@@ -1,3 +1,7 @@
+declare_args() {
+  is_debug = true
+}
+
 set_default_toolchain("//build/toolchain")
 
 set_defaults("executable") {

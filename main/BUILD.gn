@@ -1,9 +1,11 @@
 executable("main") {
+  output_extension = "html"
+
   sources = [
     "main.cc"
   ]
 
   deps = [
-    "../impeller/base"
+
   ]
 }

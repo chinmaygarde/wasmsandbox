@@ -3,9 +3,6 @@ allowed_hosts = [
 ]
 
 deps = {
-  'third_party/flutter':
-   'https://github.com/flutter/engine.git' + '@' + '76397e4eca5fe5abdd2ccb5d46af5f8d438ed711',
-
   'third_party/gn': {
     'packages': [
       {

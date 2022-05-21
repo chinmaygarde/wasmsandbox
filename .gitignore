@@ -1,5 +1,4 @@
 third_party/gn
-third_party/flutter
 .cipd/
 .gclient_entries
 out/

@@ -1,4 +1,24 @@
 
+config("debug") {
+  debug_flags = [
+    "-O0",
+    "-g",
+    "-gsource-map",
+    "-sASSERTIONS=2",
+    "-sDEMANGLE_SUPPORT=1",
+    "-fdebug-compilation-dir=../..",
+  ]
+  cflags = debug_flags
+  ldflags = debug_flags
+}
+
+config("default_warnings") {
+  cflags = [
+    "-Werror",
+    "-Wno-unused-command-line-argument",
+  ]
+}
+
 config("compiler") {
   cflags = []
   cflags_c = []
@@ -13,4 +33,12 @@ config("compiler") {
     "m",
     "stdc++",
   ]
+
+  configs = []
+  if (is_debug) {
+    configs += [
+      ":debug",
+      ":default_warnings",
+    ]
+  }
 }

@@ -1,1 +1,2 @@
 buildconfig = "//build/BUILDCONFIG.gn"
+secondary_source = "//build/secondary/"
