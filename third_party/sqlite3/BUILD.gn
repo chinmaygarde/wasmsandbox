@@ -1,0 +1,16 @@
+config("public_config") {
+  include_dirs = [
+    ".",
+  ]
+}
+
+source_set("sqlite3") {
+  sources = [
+    "sqlite3.h",
+    "sqlite3.c"
+  ]
+
+  public_configs = [
+    ":public_config"
+  ]
+}

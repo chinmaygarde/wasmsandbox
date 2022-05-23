@@ -1,0 +1,29 @@
+_src_root = "//third_party/doxygen2docset/source"
+
+executable("doxygen2docset") {
+   sources = [
+      "$_src_root/builder.cc",
+      "$_src_root/builder.h",
+      "$_src_root/docset_index.cc",
+      "$_src_root/docset_index.h",
+      "$_src_root/file.cc",
+      "$_src_root/file.h",
+      "$_src_root/logger.h",
+      "$_src_root/macros.h",
+      "$_src_root/plist_parser.cc",
+      "$_src_root/plist_parser.h",
+      "$_src_root/token.cc",
+      "$_src_root/token.h",
+      "$_src_root/token_parser.cc",
+      "$_src_root/token_parser.h",
+      "$_src_root/html_parser.h",
+      "$_src_root/html_parser.cc",
+      "$_src_root/main.cc",
+   ]
+
+   deps = [
+      "//third_party/sqlite3",
+      "//third_party/tinyxml2",
+      "//third_party/gumbo",
+   ]
+}

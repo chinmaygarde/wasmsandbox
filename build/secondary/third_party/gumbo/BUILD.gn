@@ -1,0 +1,46 @@
+_src_root = "//third_party/gumbo/src"
+
+config("public_config") {
+  include_dirs = [
+    "$_src_root",
+  ]
+}
+
+source_set("gumbo") {
+  sources = [
+    "$_src_root/string_buffer.c",
+    "$_src_root/error.h",
+    "$_src_root/tag_enum.h",
+    "$_src_root/util.c",
+    "$_src_root/insertion_mode.h",
+    "$_src_root/parser.h",
+    "$_src_root/vector.c",
+    "$_src_root/attribute.c",
+    "$_src_root/char_ref.c",
+    "$_src_root/tokenizer.h",
+    "$_src_root/utf8.c",
+    "$_src_root/string_piece.h",
+    "$_src_root/tokenizer_states.h",
+    "$_src_root/token_type.h",
+    "$_src_root/tag_gperf.h",
+    "$_src_root/string_buffer.h",
+    "$_src_root/error.c",
+    # "$_src_root/tag.in",
+    "$_src_root/util.h",
+    "$_src_root/tag.c",
+    "$_src_root/char_ref.h",
+    "$_src_root/vector.h",
+    "$_src_root/attribute.h",
+    "$_src_root/parser.c",
+    "$_src_root/tag_sizes.h",
+    "$_src_root/tag_strings.h",
+    "$_src_root/utf8.h",
+    "$_src_root/tokenizer.c",
+    "$_src_root/string_piece.c",
+    "$_src_root/gumbo.h",
+  ]
+
+  public_configs = [
+    ":public_config"
+  ]
+}

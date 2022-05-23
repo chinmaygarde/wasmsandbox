@@ -1,4 +1,7 @@
 third_party/gn
+third_party/doxygen2docset
+third_party/tinyxml2
+third_party/gumbo
 .cipd/
 .gclient_entries
 out/

@@ -1,0 +1,15 @@
+config("public_config") {
+  include_dirs = [
+    "//third_party/tinyxml2",
+  ]
+}
+
+source_set("tinyxml2") {
+  sources = [
+    "//third_party/tinyxml2/tinyxml2.h",
+    "//third_party/tinyxml2/tinyxml2.cpp"
+  ]
+  public_configs = [
+    ":public_config"
+  ]
+}
